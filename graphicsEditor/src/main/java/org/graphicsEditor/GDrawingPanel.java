@@ -21,14 +21,6 @@ public class GDrawingPanel extends JPanel {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 		}
-		private void mouse1Clicked(MouseEvent e) {
-		}
-		@Override
-		public void mouseMoved(MouseEvent e) {
-		}
-		private void mouse2Clicked(MouseEvent e) {
-		}
-
 		@Override
 		public void mousePressed(MouseEvent e) {			
 		}
@@ -38,7 +30,10 @@ public class GDrawingPanel extends JPanel {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 		}
-		
+		@Override
+		public void mouseMoved(MouseEvent e) {
+		}
+
 		@Override
 		public void mouseEntered(MouseEvent e) {
 		}
