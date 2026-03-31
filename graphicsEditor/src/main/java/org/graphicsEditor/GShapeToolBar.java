@@ -4,7 +4,6 @@ import javax.swing.*;
 
 public class GShapeToolBar extends JToolBar {
 	public GShapeToolBar() {
-
 		JRadioButton rectangleButton = new JRadioButton("rectangle");
 		this.add(rectangleButton);
 
