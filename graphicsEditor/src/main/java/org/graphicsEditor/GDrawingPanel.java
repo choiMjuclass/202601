@@ -25,9 +25,10 @@ public class GDrawingPanel extends JPanel {
 
 	// constructors
 	public GDrawingPanel() {
+		// attributes
 		this.setBackground(Color.WHITE);
 		this.eDrawingState = EDrawingState.eIdle;
-
+		// components list
 		this.shapes = new Vector<GShape>();
 
 		MouseHandler mouseHandler = new MouseHandler();
@@ -39,9 +40,10 @@ public class GDrawingPanel extends JPanel {
 	public void paintComponents(Graphics g) {
 		super.paintComponents(g);
 
-		Graphics2D panelGraphics = (Graphics2D) g;
-		for (GShape shape : this.shapes) {
-			shape.draw(panelGraphics);
+		Graphics2D panelGraphics = (Graphics2D) this.getGraphics();
+		if (panelGraphics != null) {
+			panelGraphics.drawImage(this.bufferImage, 0, 0, null);
+			panelGraphics.dispose();
 		}
 	}
 
@@ -68,19 +70,16 @@ public class GDrawingPanel extends JPanel {
 		Graphics2D bufferGraphics = this.bufferImage.createGraphics();
 		bufferGraphics.setColor(this.getBackground());
 		bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-		bufferGraphics.setColor(Color.BLACK);
+		bufferGraphics.setColor(this.getGraphics().getColor());
 		for (GShape shape : this.shapes) {
 			shape.draw(bufferGraphics);
 		}
 		this.currentShape.draw(bufferGraphics);
 		bufferGraphics.dispose();
 
-		Graphics2D panelGraphics = (Graphics2D) this.getGraphics();
-		if (panelGraphics != null) {
-			panelGraphics.drawImage(this.bufferImage, 0, 0, null);
-			panelGraphics.dispose();
-		}
+		repaint();
 	}
+
 	private void addShape() {
 		this.shapes.add(this.currentShape);
 	}
