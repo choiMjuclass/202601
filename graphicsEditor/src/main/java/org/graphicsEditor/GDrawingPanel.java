@@ -37,13 +37,11 @@ public class GDrawingPanel extends JPanel {
 	}
 
 	@Override
-	public void paintComponents(Graphics g) {
+	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 
-		Graphics2D panelGraphics = (Graphics2D) this.getGraphics();
-		if (panelGraphics != null) {
-			panelGraphics.drawImage(this.bufferImage, 0, 0, null);
-			panelGraphics.dispose();
+		if (g != null) {
+			g.drawImage(this.bufferImage, 0, 0, null);
 		}
 	}
 
