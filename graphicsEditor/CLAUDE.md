@@ -58,6 +58,13 @@ src/main/java/org/graphicsEditor/
 - 이벤트 핸들러 클래스: `Handler` 접미사 (예: `MouseHandler`)
 - 들여쓰기: 탭(tab) 사용
 
+## 워크플로우 규칙
+
+코드 변경 후 **항상** 아래 순서를 따를 것:
+1. `mvn test` 실행 → 전체 통과 확인
+2. 테스트 통과 시만 `git add` → `git commit` → `git push`
+3. 테스트 실패 시 커밋하지 말 것
+
 ## 주의사항
 
 - `GShape`는 현재 `GDrawingPanel`의 내부 클래스 — 별도 파일로 분리 시 패키지 접근 확인 필요
