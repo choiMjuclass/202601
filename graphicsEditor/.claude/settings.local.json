@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find C:/Users/chois/.claude/ -name *.md -o -name *.json)",
+      "Bash(mvn test:*)",
+      "Bash(cmd.exe /c \"where mvn\")",
+      "Bash(/dev/null -name mvn)",
+      "Bash(\"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)",
+      "Bash(JAVA_HOME=\"/c/Program Files/Eclipse Adoptium/jdk-25.0.2.10-hotspot\" PATH=\"$JAVA_HOME/bin:$PATH\" \"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" -f \"/c/Users/chois/Source/intelliJ/202601/graphicsEditor/pom.xml\" test)"
+    ]
+  }
+}
