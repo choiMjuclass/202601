@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" check-ignore -v out)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --follow --oneline run-graphicsEditor.bat)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" show 042e4a6 --stat --format=\"%H%n%an%n%ae%n%ad%n%s\")",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --reverse --format=\"%H %an %ae %ad %s\" --date=short)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" show 37c08566 --stat --format=\"%H%n%an%n%ae%n%ad%n%s\")",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --follow --oneline .claude/settings.local.json)",
+      "Read(//c/Users/chois/.claude/plugins/**)",
+      "Read(//c/Users/chois/.claude/**)",
+      "Bash(find ~/.claude -name *.md)",
+      "Bash(for f:*)",
+      "Bash(do echo:*)",
+      "Read(//c/Users/chois/Source/intelliJ/202601/graphicsEditor/**)",
+      "Bash(done)",
+      "Bash(mvn test:*)",
+      "Bash(cmd /c \"mvn test\")",
+      "Bash(\"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)",
+      "Bash(JAVA_HOME=\"/c/Program Files/Java/jdk-25\" \"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)"
+    ]
+  }
+}
