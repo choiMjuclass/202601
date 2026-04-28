@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" check-ignore -v out)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --follow --oneline run-graphicsEditor.bat)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" show 042e4a6 --stat --format=\"%H%n%an%n%ae%n%ad%n%s\")",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --reverse --format=\"%H %an %ae %ad %s\" --date=short)",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" show 37c08566 --stat --format=\"%H%n%an%n%ae%n%ad%n%s\")",
+      "Bash(git -C \"C:/Users/chois/Source/intelliJ/202601/graphicsEditor\" log --follow --oneline .claude/settings.local.json)"
+    ]
+  }
+}

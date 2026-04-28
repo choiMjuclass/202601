@@ -1,6 +1,7 @@
-C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GDrawingPanel.java
-C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GFileMenu.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\frames\GDrawingPanel.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\frames\GMainFrame.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\frames\GMenuBar.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\frames\GShapeToolBar.java
 C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GMain.java
-C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GMainFrame.java
-C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GMenuBar.java
-C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\GShapeToolBar.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\menus\GFileMenu.java
+C:\Users\chois\Source\intelliJ\202601\graphicsEditor\src\main\java\org\graphicsEditor\shapes\GShape.java

@@ -1,10 +1,1 @@
-org\graphicsEditor\GMainFrame.class
-org\graphicsEditor\GDrawingPanel.class
-org\graphicsEditor\GMenuBar.class
-org\graphicsEditor\GShapeToolBar.class
-org\graphicsEditor\GDrawingPanel$GShape.class
-org\graphicsEditor\GMainFrame$TooButtonActionHandler.class
-org\graphicsEditor\GDrawingPanel$MouseHandler.class
 org\graphicsEditor\GMain.class
-org\graphicsEditor\GFileMenu.class
-org\graphicsEditor\GDrawingPanel$EDrawingState.class
