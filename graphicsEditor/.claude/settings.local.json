@@ -17,7 +17,9 @@
       "Bash(mvn test:*)",
       "Bash(cmd /c \"mvn test\")",
       "Bash(\"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)",
-      "Bash(JAVA_HOME=\"/c/Program Files/Java/jdk-25\" \"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)"
+      "Bash(JAVA_HOME=\"/c/Program Files/Java/jdk-25\" \"/c/Program Files/JetBrains/IntelliJ IDEA 2026.1/plugins/maven/lib/maven3/bin/mvn\" test)",
+      "Bash(cat .claude/commands/*)",
+      "Bash(git -C /c/Users/chois/Source/intelliJ/202601/graphicsEditor rev-parse --show-toplevel)"
     ]
   }
 }

@@ -1,5 +1,6 @@
 package org.graphicsEditor.frames;
 
+import org.graphicsEditor.global.GConstants;
 import org.graphicsEditor.shapes.GRectangle;
 import org.graphicsEditor.shapes.GShape;
 import org.graphicsEditor.shapes.GOval;
@@ -24,8 +25,8 @@ public class GDrawingPanel extends JPanel {
 		eIdle,
 		eDrawing,
 		eMoving,
-
 		eResizing,
+		eRotating,
 		eShearing
 	}
 	private EDrawingState eDrawingState;
@@ -57,44 +58,79 @@ public class GDrawingPanel extends JPanel {
 	}
 
 	private void startRectangularShape(int x, int y) {
-		if (this.toolBar.getShapeType() == GShapeToolBar.EShapeType.eOval) {
-			this.currentShape = new GOval(x, y, x, y);
-		} else if (this.toolBar.getShapeType() == GShapeToolBar.EShapeType.eRectangle) {
-			this.currentShape = new GRectangle(x, y, x, y);
-		}
+		if (this.eDrawingState == EDrawingState.eIdle) {
+			if (this.toolBar.getShapeType() == GConstants.EShapeType.eSelect) {
+				for (GShape shape : this.shapes) {
+					GShape.EAnchor eAnchor = shape.onShape(x, y);
+					if (eAnchor != null) {
+						if (eAnchor == GShape.EAnchor.eRotate) {
+							eDrawingState = EDrawingState.eRotating;
+						} else if (eAnchor == GShape.EAnchor.eMove) {
+							eDrawingState = EDrawingState.eMoving;
+						} else { // resize
+							eDrawingState = EDrawingState.eResizing;
+						}
+						this.currentShape = shape;
+						break;
+					}
+				}
+			} else { // drawing
+				if (this.toolBar.getShapeType() == GConstants.EShapeType.eOval) {
+					this.currentShape = new GOval(x, y, x, y);
+				} else if (this.toolBar.getShapeType() == GConstants.EShapeType.eRectangle) {
+					this.currentShape = new GRectangle(x, y, x, y);
+				}
+				eDrawingState = EDrawingState.eDrawing;
+			}
 
-		if (this.getWidth() <= 0 || this.getHeight() <= 0) {
-			return;
-		}
+			if (this.getWidth() <= 0 || this.getHeight() <= 0 || this.eDrawingState == EDrawingState.eIdle) {
+				return;
+			}
 
-		if (this.bufferImage == null
-				|| this.bufferImage.getWidth() != this.getWidth()
-				|| this.bufferImage.getHeight() != this.getHeight()) {
-			this.bufferImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+			if (this.bufferImage == null
+					|| this.bufferImage.getWidth() != this.getWidth()
+					|| this.bufferImage.getHeight() != this.getHeight()) {
+				this.bufferImage = new BufferedImage(this.getWidth(), this.getHeight(), BufferedImage.TYPE_INT_ARGB);
+				Graphics2D bufferGraphics = this.bufferImage.createGraphics();
+				bufferGraphics.setColor(this.getBackground());
+				bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+				bufferGraphics.dispose();
+			}
+		}
+	}
+	private void keepRectangularShape(int x, int y) {
+		if (this.eDrawingState != EDrawingState.eIdle) {
 			Graphics2D bufferGraphics = this.bufferImage.createGraphics();
 			bufferGraphics.setColor(this.getBackground());
 			bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+			bufferGraphics.setColor(this.getForeground());
+
+			if (this.eDrawingState == EDrawingState.eDrawing) {
+				this.currentShape.setLocation1(x, y);
+				this.currentShape.draw(bufferGraphics);
+			} else if (this.eDrawingState == EDrawingState.eMoving) {
+				this.currentShape.move(x, y);
+			} else if (this.eDrawingState == EDrawingState.eResizing) {
+				this.currentShape.resize(x, y);
+			} else if (this.eDrawingState == EDrawingState.eRotating) {
+				this.currentShape.rotate(x, y);
+			}
+			for (GShape shape : this.shapes) {
+				shape.draw(bufferGraphics);
+			}
 			bufferGraphics.dispose();
+			repaint();
 		}
 	}
+
 	private void finishRectangularShape(int x, int y) {
-		this.currentShape.setLocation1(x, y);
-
-		Graphics2D bufferGraphics = this.bufferImage.createGraphics();
-		bufferGraphics.setColor(this.getBackground());
-		bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-		bufferGraphics.setColor(this.getForeground());
-		for (GShape shape : this.shapes) {
-			shape.draw(bufferGraphics);
+		if (this.eDrawingState != EDrawingState.eIdle) {
+			if (this.eDrawingState == EDrawingState.eDrawing) {
+				this.shapes.add(this.currentShape);
+			}
+			this.eDrawingState = EDrawingState.eIdle;
+			this.currentShape = null;
 		}
-		this.currentShape.draw(bufferGraphics);
-		bufferGraphics.dispose();
-
-		repaint();
-	}
-
-	private void addShape() {
-		this.shapes.add(this.currentShape);
 	}
 
 	private class MouseHandler implements MouseListener, MouseMotionListener {
@@ -120,23 +156,15 @@ public class GDrawingPanel extends JPanel {
 		}
 		@Override
 		public void mousePressed(MouseEvent e) {
-			if (eDrawingState == EDrawingState.eIdle) {
-				startRectangularShape(e.getX(), e.getY());
-				eDrawingState = EDrawingState.eDrawing;
-			}
+			startRectangularShape(e.getX(), e.getY());
 		}
 		@Override
 		public void mouseDragged(MouseEvent e) {
-			if (eDrawingState == EDrawingState.eDrawing) {
-				finishRectangularShape(e.getX(), e.getY());
-			}
+			keepRectangularShape(e.getX(), e.getY());
 		}
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (eDrawingState == EDrawingState.eDrawing) {
-				addShape();
-				eDrawingState = EDrawingState.eIdle;
-			}
+			finishRectangularShape(e.getX(), e.getY());
 		}
 
 
