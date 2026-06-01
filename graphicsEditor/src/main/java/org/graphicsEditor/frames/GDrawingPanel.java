@@ -78,23 +78,34 @@ public class GDrawingPanel extends JPanel {
 
 	private void startTransform(int x, int y) {
 		if (toolBar.getShapeType() == GConstants.EShapeType.eSelect) { // context
+			GShape selectedShape = null;
 			for (GShape shape : shapes) {
 				GShape.EAnchor eAnchor = shape.onShape(x, y);
 				if (eAnchor != null) {
-					if (eAnchor == GShape.EAnchor.eRotate) {
+					selectedShape = shape;
+					if (eAnchor == GShape.EAnchor.eRR) {
 						this.transformer = new GDrawer(shape);
 					} else if (eAnchor == GShape.EAnchor.eMove) {
 						this.transformer = new GTranslator(shape);
-					} else { // resize
+					} else { // resize anchors (NW, N, NE, E, SE, S, SW, W)
 						this.transformer = new GDrawer(shape);
 					}
 					this.transformer.start(x, y);
 					break;
 				}
 			}
+
+			// Update selection status
+			for (GShape shape : shapes) {
+				shape.setSelected(shape == selectedShape);
+			}
 		}
 		else {
-			GShape currentShape = toolBar.getShapeType().getShape();
+			for (GShape shape : shapes) {
+				shape.setSelected(false);
+			}
+			GShape currentShape = toolBar.getShapeType().getShape().clone();
+			currentShape.setSelected(true);
 			this.shapes.add(currentShape);
 			this.transformer = new GDrawer(currentShape);
 
@@ -104,18 +115,20 @@ public class GDrawingPanel extends JPanel {
 	}
 
 	private void keepTransform(int x, int y) {
-		Graphics2D bufferGraphics = this.bufferImage.createGraphics();
-		bufferGraphics.setColor(this.getBackground());
-		bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
-		bufferGraphics.setColor(this.getForeground());
+		if (this.transformer != null) {
+			Graphics2D bufferGraphics = this.bufferImage.createGraphics();
+			bufferGraphics.setColor(this.getBackground());
+			bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+			bufferGraphics.setColor(this.getForeground());
 
-		this.transformer.keep(x, y);
+			this.transformer.keep(x, y);
 
-		for (GShape shape : this.shapes) {
-			shape.draw(bufferGraphics);
+			for (GShape shape : this.shapes) {
+				shape.draw(bufferGraphics);
+			}
+			bufferGraphics.dispose();
+			repaint();
 		}
-		bufferGraphics.dispose();
-		repaint();
 	}
 
 	private void continueDrawing(int x, int y) {
@@ -123,8 +136,39 @@ public class GDrawingPanel extends JPanel {
 	}
 
 	private void finishTransform(int x, int y) {
-		this.transformer.finish(x, y);
-		this.transformer = null;
+		if (this.transformer != null) {
+			this.transformer.finish(x, y);
+			this.transformer = null;
+		}
+	}
+
+	private void changeCursor(int x, int y) {
+		if (toolBar.getShapeType() == GConstants.EShapeType.eSelect) {
+			GShape.EAnchor eAnchor = null;
+			for (GShape shape : shapes) {
+				eAnchor = shape.onShape(x, y);
+				if (eAnchor != null) {
+					break;
+				}
+			}
+			if (eAnchor != null) {
+				switch (eAnchor) {
+					case eNW: setCursor(new Cursor(Cursor.NW_RESIZE_CURSOR)); break;
+					case eN: setCursor(new Cursor(Cursor.N_RESIZE_CURSOR)); break;
+					case eNE: setCursor(new Cursor(Cursor.NE_RESIZE_CURSOR)); break;
+					case eE: setCursor(new Cursor(Cursor.E_RESIZE_CURSOR)); break;
+					case eSE: setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR)); break;
+					case eS: setCursor(new Cursor(Cursor.S_RESIZE_CURSOR)); break;
+					case eSW: setCursor(new Cursor(Cursor.SW_RESIZE_CURSOR)); break;
+					case eW: setCursor(new Cursor(Cursor.W_RESIZE_CURSOR)); break;
+					case eRR: setCursor(new Cursor(Cursor.HAND_CURSOR)); break;
+					case eMove: setCursor(new Cursor(Cursor.MOVE_CURSOR)); break;
+					default: setCursor(new Cursor(Cursor.DEFAULT_CURSOR)); break;
+				}
+			} else {
+				setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+		}
 	}
 
 	private class MouseHandler implements MouseListener, MouseMotionListener {
@@ -142,6 +186,7 @@ public class GDrawingPanel extends JPanel {
 
 		@Override
 		public void mouseMoved(MouseEvent e) {
+			changeCursor(e.getX(), e.getY());
 			if (toolBar.getShapeType().getDrawingType() == GConstants.EDrawingType.eNPoint) { // context
 				if (eDrawingState == EDrawingState.eTransforming) {
 					keepTransform(e.getX(), e.getY());
