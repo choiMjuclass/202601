@@ -19,8 +19,4 @@ public class GRectangle extends GShape{
         double h = y-r.getY();
         r.setFrame(r.getX(), r.getY(), w, h);
     }
-    public void translate(int dx, int dy) {
-        Rectangle r = (Rectangle) shape;
-        r.setFrame(r.getX()+dx, r.getY()+dy, r.getWidth(), r.getHeight());
-    }
 }

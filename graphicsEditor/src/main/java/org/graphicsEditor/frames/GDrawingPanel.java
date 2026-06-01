@@ -6,6 +6,8 @@ import org.graphicsEditor.shapes.GShape;
 import org.graphicsEditor.shapes.GOval;
 import org.graphicsEditor.shapes.GShape;
 import org.graphicsEditor.transformer.GDrawer;
+import org.graphicsEditor.transformer.GRotate;
+import org.graphicsEditor.transformer.GScale;
 import org.graphicsEditor.transformer.GTransformer;
 import org.graphicsEditor.transformer.GTranslator;
 
@@ -84,11 +86,11 @@ public class GDrawingPanel extends JPanel {
 				if (eAnchor != null) {
 					selectedShape = shape;
 					if (eAnchor == GShape.EAnchor.eRR) {
-						this.transformer = new GDrawer(shape);
+						this.transformer = new GRotate(shape);
 					} else if (eAnchor == GShape.EAnchor.eMove) {
 						this.transformer = new GTranslator(shape);
 					} else { // resize anchors (NW, N, NE, E, SE, S, SW, W)
-						this.transformer = new GDrawer(shape);
+						this.transformer = new GScale(shape, eAnchor);
 					}
 					this.transformer.start(x, y);
 					break;
