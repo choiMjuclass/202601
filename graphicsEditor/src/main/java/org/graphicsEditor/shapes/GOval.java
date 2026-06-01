@@ -19,4 +19,8 @@ public class GOval extends GShape{
         double h = y-r.getY();
         r.setFrame(r.getX(), r.getY(), w, h);
     }
+    public void translate(int dx, int dy) {
+        Ellipse2D r = (Ellipse2D) shape;
+        r.setFrame(r.getX()+dx, r.getY()+dy, r.getWidth(), r.getHeight());
+    }
 }
