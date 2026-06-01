@@ -2,6 +2,8 @@ package org.graphicsEditor.transformer;
 
 import org.graphicsEditor.shapes.GShape;
 
+import java.awt.geom.AffineTransform;
+
 public class GTranslator extends GTransformer{
     private int x0;
     private int y0;
@@ -17,9 +19,10 @@ public class GTranslator extends GTransformer{
 
     @Override
     public void keep(int x, int y) {
-        int dx = x-x0;
-        int dy = y-y0;
-        shape.translate(dx, dy);
+        int dx = x - x0;
+        int dy = y - y0;
+        AffineTransform affineTransform = shape.getAffineTransform();
+        affineTransform.translate(dx, dy);
         this.x0 = x;
         this.y0 = y;
     }

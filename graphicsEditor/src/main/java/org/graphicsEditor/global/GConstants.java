@@ -30,7 +30,7 @@ public class GConstants {
             return this.name;
         }
         public GShape getShape() {
-            return this.shape.clone();
+            return this.shape;
         }
         public EDrawingType getDrawingType() {
             return this.eDrawingType;
