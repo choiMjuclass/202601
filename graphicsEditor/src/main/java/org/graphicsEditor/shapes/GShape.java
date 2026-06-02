@@ -102,7 +102,7 @@ abstract public class GShape implements Cloneable {
             this.anchors[EAnchor.eSS.ordinal()].setFrame(br.x, br.y - h, w, h);
             this.anchors[EAnchor.eSW.ordinal()].setFrame(br.x, br.y - h, w, h);
             this.anchors[EAnchor.eWW.ordinal()].setFrame(br.x, br.y - h, w, h);
-            this.anchors[EAnchor.eRotate.ordinal()].setFrame(br.x, br.y - h, w, h);
+ //           this.anchors[EAnchor.eRotate.ordinal()].setFrame(br.x, br.y - h, w, h);
         }
         public void draw(Graphics2D g) {
             for (int i = 0; i < anchors.length-1; i++) {

@@ -10,6 +10,10 @@ abstract public class GTransformer {
     public GTransformer(GShape shape) {
         this.shape = shape;
     }
+    public GShape getShape() {
+        return this.shape;
+    }
+
     abstract public void start(int x, int y);
     abstract public void keep(int x, int y);
     abstract public void finish(int x, int y);

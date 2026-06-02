@@ -15,6 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
+import java.util.Objects;
 import java.util.Vector;
 
 public class GDrawingPanel extends JPanel {
@@ -124,6 +125,23 @@ public class GDrawingPanel extends JPanel {
 
 	private void finishTransform(int x, int y) {
 		this.transformer.finish(x, y);
+		for (GShape shape : this.shapes) {
+			shape.setSelected(false);
+		}
+		Objects.requireNonNull(this.transformer).getShape().setSelected(true);
+
+		Graphics2D bufferGraphics = this.bufferImage.createGraphics();
+		bufferGraphics.setColor(this.getBackground());
+		bufferGraphics.fillRect(0, 0, this.getWidth(), this.getHeight());
+		bufferGraphics.setColor(this.getForeground());
+
+		for (GShape shape : this.shapes) {
+			shape.draw(bufferGraphics);
+		}
+		bufferGraphics.dispose();
+
+		repaint();
+
 		this.transformer = null;
 	}
 
